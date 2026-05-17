@@ -1,0 +1,504 @@
+```mermaid
+erDiagram
+  allergen_codes {
+    int allergen_code_id PK
+    string allergen_name
+    string allergy_type
+  }
+  allergies {
+    int allergy_id PK
+    int allergen_code_id FK
+    string allergen_name
+    string allergy_type
+  }
+  allowances {
+    int allowance_id PK
+    string allowance_name
+  }
+  api_key_roles {
+    int api_key_id FK
+    int role_id FK
+  }
+  api_keys {
+    int api_key_id PK
+    int user_id FK
+    int role_id FK
+    string client_name
+    boolean is_active
+  }
+  appointments {
+    int appointment_id PK
+    int patient_id FK
+    int provider_id FK
+    int department_id FK
+    datetime appt_datetime
+    string status
+  }
+  attendance {
+    int attendance_id PK
+    int employee_id FK
+    string log_type
+    datetime datetime_log
+  }
+  audit_logs {
+    int audit_id PK
+    int actor_user_id FK
+    string action_type
+    string entity_name
+  }
+  beds {
+    int bed_id PK
+    int room_id FK
+    string bed_label
+    string status
+  }
+  charges {
+    int charge_id PK
+    int encounter_id FK
+    string charge_type
+    decimal amount
+  }
+  check_ins {
+    int checkin_id PK
+    int patient_id FK
+    int appointment_id FK
+    datetime checkin_time
+    string method
+  }
+  claim_insurances {
+    int claim_id FK
+    int insurance_id FK
+    int sequence
+    string status
+  }
+  claims {
+    int claim_id PK
+    int encounter_id FK
+    int insurance_id FK
+    string claim_status
+    decimal total_amount
+  }
+  clinical_note_amendments {
+    int amendment_id PK
+    int note_id FK
+    int amended_by_provider_id FK
+    string reason
+  }
+  clinical_notes {
+    int note_id PK
+    int encounter_id FK
+    int provider_id FK
+    int note_type_id FK
+    string note_status
+  }
+  deductions {
+    int deduction_id PK
+    string deduction_name
+  }
+  departments {
+    int department_id PK
+    string department_name
+  }
+  diagnoses {
+    int diagnosis_id PK
+    int encounter_id FK
+    string icd10_code FK
+    string diagnosis_type
+  }
+  discharge_note_medications {
+    int discharge_note_id FK
+    int prescription_id FK
+  }
+  discharge_notes {
+    int discharge_note_id PK
+    int encounter_id FK
+    int patient_id FK
+    string discharge_status
+  }
+  employee_addresses {
+    int employee_address_id PK
+    int employee_id FK
+    string city
+    string state
+  }
+  employee_allowances {
+    int employee_id FK
+    int allowance_id FK
+    string calc_type
+    decimal amount
+  }
+  employee_deductions {
+    int employee_id FK
+    int deduction_id FK
+    string calc_type
+    decimal amount
+  }
+  employee_licenses {
+    int license_id PK
+    int employee_id FK
+    string license_type
+    string license_number
+    date expiration_date
+  }
+  employees {
+    int employee_id PK
+    string employee_no
+    string first_name
+    string last_name
+    int department_id FK
+    string status
+  }
+  encounter_events {
+    int event_id PK
+    int encounter_id FK
+    int performed_by_user_id FK
+    string event_type
+  }
+  encounters {
+    int encounter_id PK
+    int patient_id FK
+    int department_id FK
+    int attending_provider_id FK
+    int room_id FK
+    string status
+  }
+  icd10_codes {
+    string icd10_code PK
+    string description
+    string category
+  }
+  insurance_plans {
+    int insurance_id PK
+    string payer_name
+    string plan_name
+  }
+  lab_order_items {
+    int lab_order_id FK
+    int lab_test_id FK
+  }
+  lab_orders {
+    int lab_order_id PK
+    int encounter_id FK
+    int ordered_by_provider_id FK
+    string status
+  }
+  lab_results {
+    int lab_result_id PK
+    int lab_order_id
+    int lab_test_id
+    string result_value
+    string flag
+  }
+  lab_tests {
+    int lab_test_id PK
+    string test_name
+    string unit
+    string reference_range
+  }
+  medication_orders {
+    int med_order_id PK
+    int encounter_id FK
+    int medication_id FK
+    string dose
+    string status
+  }
+  medications {
+    int medication_id PK
+    string med_name
+    string strength
+    string form
+  }
+  note_types {
+    int note_type_id PK
+    string note_type_name
+  }
+  patient_accounts {
+    int patient_account_id PK
+    int patient_id FK
+    string username
+    string account_status
+  }
+  patient_addresses {
+    int patient_address_id PK
+    int patient_id FK
+    string line1
+    string city
+    string state
+  }
+  patient_allergies {
+    int patient_allergy_id PK
+    int patient_id FK
+    int allergy_id FK
+    string severity
+  }
+  patient_consents {
+    int consent_id PK
+    int patient_id FK
+    int encounter_id FK
+    string consent_type
+  }
+  patient_emergency_contacts {
+    int contact_id PK
+    int patient_id FK
+    string contact_name
+    string relationship_to_patient
+  }
+  patient_insurance {
+    int patient_insurance_id PK
+    int patient_id FK
+    int insurance_id FK
+    string policy_number
+  }
+  patient_sessions {
+    int session_id PK
+    int patient_account_id FK
+    datetime expires_at
+  }
+  patients {
+    int patient_id PK
+    string mrn
+    string first_name
+    string last_name
+    date dob
+    string sex
+  }
+  payments {
+    int payment_id PK
+    int claim_id FK
+    int patient_id FK
+    decimal amount
+    string payment_status
+  }
+  payroll {
+    int payroll_id PK
+    string ref_no
+    date date_from
+    date date_to
+    string status
+  }
+  payroll_item_allowances {
+    int payroll_id
+    int employee_id
+    int allowance_id FK
+    decimal amount
+  }
+  payroll_item_deductions {
+    int payroll_id
+    int employee_id
+    int deduction_id FK
+    decimal amount
+  }
+  payroll_items {
+    int payroll_id FK
+    int employee_id FK
+    decimal net_pay
+  }
+  permissions {
+    int permission_id PK
+    string permission_name
+  }
+  positions {
+    int position_id PK
+    string position_name
+  }
+  prescriptions {
+    int prescription_id PK
+    int encounter_id FK
+    int patient_id FK
+    int provider_id FK
+    int medication_id FK
+    string status
+  }
+  procedures {
+    int procedure_id PK
+    int encounter_id FK
+    int performed_by_provider_id FK
+    string cpt_code
+  }
+  providers {
+    int provider_id PK
+    int employee_id FK
+    string specialty
+    string npi_number
+  }
+  referrals {
+    int referral_id PK
+    int encounter_id FK
+    int referring_provider_id FK
+    string status
+  }
+  role_permissions {
+    int permission_id FK
+    int role_id FK
+  }
+  roles {
+    int role_id PK
+    string role_name
+  }
+  rooms {
+    int room_id PK
+    int department_id FK
+    string room_number
+    string room_type
+    string status
+  }
+  shifts {
+    int shift_id PK
+    string shift_name
+    string start_time
+    string end_time
+  }
+  staff_schedule {
+    int schedule_id PK
+    int employee_id FK
+    int department_id FK
+    int shift_id FK
+    date shift_date
+    string status
+  }
+  timesheets {
+    int timesheet_id PK
+    int employee_id FK
+    date work_date
+    string approval_status
+  }
+  user_roles {
+    int role_id FK
+    int user_id FK
+  }
+  user_sessions {
+    string session_id PK
+    int user_id FK
+    datetime expires_at
+  }
+  users {
+    int user_id PK
+    int employee_id FK
+    int patient_id FK
+    string username
+    string account_status
+  }
+  vital_signs {
+    int vital_id PK
+    int encounter_id FK
+    int checkin_id FK
+    decimal temperature
+    int systolic_bp
+    datetime recorded_at
+  }
+  webhook_subscription {
+    int webhook_id PK
+    int api_key_id FK
+    string event_type
+    string target_url
+    boolean is_active
+  }
+
+  allergen_codes ||--o{ allergies : "allergen_code_id"
+  api_keys }o--o{ api_key_roles : "api_key_id"
+  roles }o--o{ api_key_roles : "role_id"
+  users ||--o{ api_keys : "user_id"
+  roles ||--o{ api_keys : "role_id"
+  patients ||--o{ appointments : "patient_id"
+  providers ||--o{ appointments : "provider_id"
+  departments ||--o{ appointments : "department_id"
+  users ||--o{ appointments : "cancelled_by_user_id"
+  employees ||--o{ attendance : "employee_id"
+  users ||--o{ audit_logs : "actor_user_id"
+  rooms ||--o{ beds : "room_id"
+  encounters ||--o{ charges : "encounter_id"
+  lab_orders ||--o{ charges : "lab_order_id"
+  medication_orders ||--o{ charges : "med_order_id"
+  procedures ||--o{ charges : "procedure_id"
+  rooms ||--o{ charges : "source_room_id"
+  patients ||--o{ check_ins : "patient_id"
+  appointments ||--o{ check_ins : "appointment_id"
+  claims }o--o{ claim_insurances : "claim_id"
+  insurance_plans }o--o{ claim_insurances : "insurance_id"
+  encounters ||--o{ claims : "encounter_id"
+  insurance_plans ||--o{ claims : "insurance_id"
+  clinical_notes ||--o{ clinical_note_amendments : "note_id"
+  providers ||--o{ clinical_note_amendments : "amended_by_provider_id"
+  providers ||--o{ clinical_notes : "provider_id"
+  encounters ||--o{ clinical_notes : "encounter_id"
+  note_types ||--o{ clinical_notes : "note_type_id"
+  encounters ||--o{ diagnoses : "encounter_id"
+  icd10_codes ||--o{ diagnoses : "icd10_code"
+  providers ||--o{ diagnoses : "diagnosed_by_provider_id"
+  discharge_notes }o--o{ discharge_note_medications : "discharge_note_id"
+  prescriptions }o--o{ discharge_note_medications : "prescription_id"
+  encounters ||--o{ discharge_notes : "encounter_id"
+  patients ||--o{ discharge_notes : "patient_id"
+  providers ||--o{ discharge_notes : "provider_id"
+  employees ||--o{ employee_addresses : "employee_id"
+  employees }o--o{ employee_allowances : "employee_id"
+  allowances }o--o{ employee_allowances : "allowance_id"
+  employees }o--o{ employee_deductions : "employee_id"
+  deductions }o--o{ employee_deductions : "deduction_id"
+  employees ||--o{ employee_licenses : "employee_id"
+  users ||--o{ employee_licenses : "verified_by_user_id"
+  departments ||--o{ employees : "department_id"
+  positions ||--o{ employees : "position_id"
+  encounters ||--o{ encounter_events : "encounter_id"
+  users ||--o{ encounter_events : "performed_by_user_id"
+  patients ||--o{ encounters : "patient_id"
+  departments ||--o{ encounters : "department_id"
+  providers ||--o{ encounters : "attending_provider_id"
+  rooms ||--o{ encounters : "room_id"
+  check_ins ||--o{ encounters : "checkin_id"
+  lab_orders }o--o{ lab_order_items : "lab_order_id"
+  lab_tests }o--o{ lab_order_items : "lab_test_id"
+  encounters ||--o{ lab_orders : "encounter_id"
+  providers ||--o{ lab_orders : "ordered_by_provider_id"
+  encounters ||--o{ medication_orders : "encounter_id"
+  providers ||--o{ medication_orders : "ordered_by_provider_id"
+  medications ||--o{ medication_orders : "medication_id"
+  patients ||--o{ patient_accounts : "patient_id"
+  patients ||--o{ patient_addresses : "patient_id"
+  patients ||--o{ patient_allergies : "patient_id"
+  allergies ||--o{ patient_allergies : "allergy_id"
+  providers ||--o{ patient_allergies : "recorded_by_provider_id"
+  encounters ||--o{ patient_consents : "encounter_id"
+  patients ||--o{ patient_consents : "patient_id"
+  users ||--o{ patient_consents : "witnessed_by_user_id"
+  patients ||--o{ patient_emergency_contacts : "patient_id"
+  patients ||--o{ patient_insurance : "patient_id"
+  insurance_plans ||--o{ patient_insurance : "insurance_id"
+  patient_accounts ||--o{ patient_sessions : "patient_account_id"
+  payments ||--o{ payments : "reversal_payment_id"
+  claims ||--o{ payments : "claim_id"
+  patients ||--o{ payments : "patient_id"
+  allowances }o--o{ payroll_item_allowances : "allowance_id"
+  deductions }o--o{ payroll_item_deductions : "deduction_id"
+  payroll }o--o{ payroll_items : "payroll_id"
+  employees }o--o{ payroll_items : "employee_id"
+  encounters ||--o{ prescriptions : "encounter_id"
+  patients ||--o{ prescriptions : "patient_id"
+  providers ||--o{ prescriptions : "provider_id"
+  medications ||--o{ prescriptions : "medication_id"
+  providers ||--o{ procedures : "performed_by_provider_id"
+  encounters ||--o{ procedures : "encounter_id"
+  employees ||--o{ providers : "employee_id"
+  encounters ||--o{ referrals : "encounter_id"
+  providers ||--o{ referrals : "referred_to_provider_id"
+  providers ||--o{ referrals : "referring_provider_id"
+  permissions }o--o{ role_permissions : "permission_id"
+  roles }o--o{ role_permissions : "role_id"
+  departments ||--o{ rooms : "department_id"
+  employees ||--o{ staff_schedule : "employee_id"
+  departments ||--o{ staff_schedule : "department_id"
+  shifts ||--o{ staff_schedule : "shift_id"
+  users ||--o{ timesheets : "approved_by_user_id"
+  employees ||--o{ timesheets : "employee_id"
+  staff_schedule ||--o{ timesheets : "schedule_id"
+  employees ||--o{ timesheets : "approved_by_employee_id"
+  roles }o--o{ user_roles : "role_id"
+  users }o--o{ user_roles : "user_id"
+  users }o--o{ user_sessions : "user_id"
+  patients ||--o{ users : "patient_id"
+  employees ||--o{ users : "employee_id"
+  encounters ||--o{ vital_signs : "encounter_id"
+  check_ins ||--o{ vital_signs : "checkin_id"
+  employees ||--o{ vital_signs : "recorded_by_employee_id"
+  api_keys ||--o{ webhook_subscription : "api_key_id"
+```
