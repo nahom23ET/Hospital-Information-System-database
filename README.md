@@ -15,7 +15,7 @@ A centralized relational database for hospital operations, covering clinical wor
 - [Security Model](#security-model)
 - [API Integration](#api-integration)
 - [Project Files](#project-files)
-- [Team](#team)
+
 
 ---
 
