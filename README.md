@@ -48,7 +48,7 @@ The HIS database is the single source of truth for all hospital operational data
 
 ## Domain Breakdown
 
-### 🏥 Clinical (29 tables)
+###  Clinical (29 tables)
 
 The largest domain. All clinical data is anchored to an `ENCOUNTERS` record, which links a patient to a provider, department, and room.
 
