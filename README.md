@@ -131,7 +131,7 @@ Configurable allowances and deductions with transparent, itemized pay stubs.
 | `EMPLOYEE_ALLOWANCES` | Per-employee allowance config (fixed or %) |
 | `EMPLOYEE_DEDUCTIONS` | Per-employee deduction config (fixed or %) |
 
-### ⏱ Workforce (1 table)
+###  Workforce (1 table)
 
 | Table | Purpose |
 |---|---|
